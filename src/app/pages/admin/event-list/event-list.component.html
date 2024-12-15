@@ -1,0 +1,58 @@
+<div class="card mt-5">
+  <div class="card-header">
+    <h2 class="text-center mb-4">Event List</h2>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table ">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Ticket Price</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of events(); let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.category }}</td>
+            <td>${{ event.ticketPrice }}</td>
+            <td>{{ event.date }}</td>
+            <td>{{ event.location }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm me-2"  (click)="viewEvent(event)" ><i class="ti ti-eye"></i></button>
+              <button class="btn btn-primary btn-sm me-2"[routerLink]="'/edit-event/'+event.id"><i class="ti ti-edit"></i></button>
+            <button class="btn btn-danger btn-sm" (click)="deleteEvent(event.id)"><i class="ti ti-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@if(showEvent()){
+  <app-modal [width]="'1000px'" (close)="showEvent.set(false)">
+    <div slot="header">Event</div>
+    <div slot="body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="mb-4">Name: {{eventData().name}}</h4>
+          <h4 class="mb-4">Date/Time: {{eventData().date}}</h4>
+          <h4>Location: {{eventData().location}}</h4>
+        </div>
+        <div class="col-md-6">
+      <app-map-google [center]="eventData().locationData" [zoom]="12" [radius]="eventData().radius"></app-map-google>
+
+        </div>
+      </div>
+   
+    </div>
+  </app-modal>
+
+}
+ 

@@ -1,0 +1,25 @@
+<div
+class="modal-overlay" 
+[@fadeInOut]
+(click)="closeModal($event)"
+>
+<div
+  class="modal-container"
+  [ngClass]="class"
+  [ngStyle]="{ width: width, height: height }"
+  (click)="$event.stopPropagation()"
+>
+  <div class="modal-header">
+    <div class="d-flex w-100 justify-content-between">
+        <ng-content select="[slot=header]"></ng-content>
+        <button class="btn p-0"><i class="ti ti-square-x" (click)="close.emit()"></i></button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <ng-content select="[slot=body]"></ng-content>
+  </div>
+  <div class="modal-footer">
+    <ng-content select="[slot=footer]"></ng-content>
+  </div>
+</div>
+</div>

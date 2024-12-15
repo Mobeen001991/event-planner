@@ -1,0 +1,115 @@
+<div class="auth-main">
+    <div class="auth-wrapper v3">
+      <div class="">
+        <div class="card mb-5 mt-2">
+          <div class="card-body">
+            <div class="d-flex justify-content-center">
+              <div class="auth-header">
+                <h2 class="text-secondary mt-3"><b>Create New Event</b></h2>
+                <p class="fs-5 mt-2">Fill out the details below to add an event</p>
+              </div>
+            </div>
+            <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="eventName"
+                  formControlName="name"
+                  placeholder="Event Name"
+                />
+                <label for="eventName">Event Name</label>
+              </div>
+              <div class="form-floating mb-3">
+                <textarea
+                  class="form-control"
+                  id="eventDescription"
+                  formControlName="description"
+                  placeholder="Event Description"
+                  style="height: 100px"
+                ></textarea>
+                <label for="eventDescription">Description</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="eventDateTime"
+                  formControlName="date"
+                />
+                <label for="eventDateTime">Date and Time</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="eventLocation"
+                  #autocompleteInput
+                  formControlName="location"
+                  placeholder="Location"
+                />
+                <label for="eventLocation">Location</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="eventCapacity"
+                  formControlName="capacity"
+                  placeholder="Capacity"
+                />
+                <label for="eventCapacity">Capacity</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="eventTicketPrice"
+                  formControlName="ticketPrice"
+                  placeholder="Ticket Price"
+                />
+                <label for="eventTicketPrice">Ticket Price</label>
+              </div>
+              <div class="form-floating mb-3">
+                <select
+                  class="form-control"
+                  id="eventCategory"
+                  formControlName="category"
+                >
+                @for (category of categories; track category) {
+                  <option [value]="category">{{ category }}</option>
+                }
+                </select>
+                <label for="eventCategory">Category</label>
+              </div>
+              <div class="mb-3">
+                <label for="eventImage" class="form-label">Event Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="eventImage"
+                  (change)="onFileSelect($event)"
+                />
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="eventRadius"
+                  formControlName="radius"
+                  placeholder="Enter radius in km"
+                />
+                <label for="eventRadius">Event Radius (km)</label>
+              </div>
+              <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-secondary" [disabled]="!eventForm.valid">
+                  Create Event
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

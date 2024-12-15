@@ -1,0 +1,22 @@
+<google-map
+#map
+[center]="center"
+[zoom]="zoom"
+[options]="options"
+(mapClick)="onMapClick($event)"
+style="width: 100%; height: 400px;display: block;"
+>
+<map-marker
+  *ngFor="let marker of markers"
+  [position]="marker.position"
+  [label]="marker.label"
+  [title]="marker.title"
+  [options]="marker.options"
+></map-marker>
+<map-circle
+        *ngIf="radius && center"
+        [center]="center"
+        [radius]="radiusInMeters"
+        [options]="circleOptions"
+      ></map-circle>
+</google-map>
