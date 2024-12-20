@@ -23,15 +23,19 @@ export class AuthService {
     private firestore: Firestore,
     private router: Router
   ) {
-    onAuthStateChanged(this.auth, (user) => {
-      console.log(user);
+    onAuthStateChanged(this.auth, async (user) => {
       this.currentUserSignal.set(user);
+      await this.getUserRole();
     });
   }
   get currentUser() {
     return this.currentUserSignal;
   }
+  get userRole() {
+    return this.userRoleSignal;
+  }
   private currentUserSignal = signal<User | null>(null); // Signal for current user
+  private userRoleSignal = signal<string>(''); // Signal for current user
 
   // Get the current user's information
   getCurrentUser(): User | null {
@@ -42,11 +46,11 @@ export class AuthService {
     const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
     const user = userCredential.user;
 
-      // Update the user's displayName
-      await updateProfile(user, { displayName: `${firstName} ${lastName}` });
+    // Update the user's displayName
+    await updateProfile(user, { displayName: `${firstName} ${lastName}` });
     // Save user role in Firestore
     const userDoc = doc(this.firestore, `users/${user.uid}`);
-    await setDoc(userDoc, { email: user.email, role, firstName, lastName,displayName: `${firstName} ${lastName}` });
+    await setDoc(userDoc, { email: user.email, role, firstName, lastName, displayName: `${firstName} ${lastName}` });
 
     return user;
   }
@@ -58,10 +62,9 @@ export class AuthService {
   // Get the current user role
   async getUserRole(): Promise<string | null> {
     if (!this.currentUser) return null;
-
-    const userDoc = doc(this.firestore, `users/${this.getCurrentUser().uid}`);
+    const userDoc = doc(this.firestore, `users/${this.currentUser()?.uid}`);
     const userSnapshot = await getDoc(userDoc);
-
+    console.log(userSnapshot.data())
     return userSnapshot.exists() ? (userSnapshot.data() as any).role : null;
   }
   // Google Sign-In

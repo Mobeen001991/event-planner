@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="card-header p-3">
+    <h2 class="mb-0">My Purchased Events</h2>
+  </div>
+  <div class="card-body p-3">
+    <!-- No Events Message -->
+    <div *ngIf="purchasedEvents().length === 0" class="no-events">
+      <p>You have not purchased any events yet.</p>
+    </div>
+
+    <!-- Events Table -->
+    <app-table [columns]="columns()" [items]="purchasedEvents()">
+
+    </app-table>
+    <!-- <table *ngIf="purchasedEvents().length > 0" class="bg-white table">
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Tickets</th>
+          <th>Total Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of purchasedEvents()">
+          <td>{{ event.eventName }}</td>
+          <td>{{ event.tickets }}</td>
+          <td>{{ event.totalAmount | currency }}</td>
+          <td>{{ event.transactionDate | date: 'MMM d, y HH:mm' }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"><strong>Total:</strong></td>
+          <td colspan="2">{{ totalAmount() | currency }}</td>
+        </tr>
+      </tfoot>
+    </table> -->
+  </div>
+</div>

@@ -37,7 +37,8 @@ export default class CreateEventComponent implements OnInit {
       ticketPrice: [0, [Validators.required, Validators.min(0)]],
       category: ['', Validators.required],
       image: [null],
-      radius: [1, [Validators.required, Validators.min(1)]]
+      radius: [1, [Validators.required, Validators.min(1)]],
+      booked: [0]
     });
   }
   ngOnInit(){}
@@ -45,12 +46,17 @@ export default class CreateEventComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       const filePath = `events/${file.name}`;
-      const fileRef = this.storage.ref(filePath);
-      this.storage.upload(filePath, file).then(() => {
-        fileRef.getDownloadURL().subscribe((url) => {
-          this.imageUrl.set(url);
-        });
-      });
+      const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        this.eventForm.patchValue({image: reader.result})
+    };
+      // const fileRef = this.storage.ref(filePath);
+      // this.storage.upload(filePath, file).then(() => {
+      //   fileRef.getDownloadURL().subscribe((url) => {
+      //     this.imageUrl.set(url);
+      //   });
+      // });
     }
   }
 
